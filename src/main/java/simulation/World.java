@@ -9,10 +9,8 @@ public class World {
 	private static final Random random = new Random();
 
 	public static void main(String[] args) {
-
 		System.out.println("Start");
-		Animal animal = new Animal(new Vector2D(random.nextInt(100), random.nextInt(100)));
-		moveAnimal(animal);
+		Simulation.simulateDay();
 		System.out.println("Stop");
 	}
 
