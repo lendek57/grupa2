@@ -14,18 +14,49 @@ public class WorldMap extends AbstractWorldMap {
         super(width, height);
         random = new Random();
         for (int i = 0; i < ANIMALS_NO; i++) {
-            animals.add(new Animal(getRandomPosition()));
+            animals.add(new Animal(getRandomVector()));
+        }
+        for (int i = 0; i < PLANTS_NO; i++) {
+            placePlantOnMap();
         }
     }
 
-    private Vector2D getRandomPosition() {
+    private void placePlantOnMap() {
+        Vector2D position = getRandomVector();
+        while (isOccupiedByPlant(position)) position = getRandomVector();
+        plants.add(new Plant(position));
+    }
+
+    private boolean isOccupiedByPlant(Vector2D position) {
+        return getPlantAtPosition(position) != null;
+    }
+
+    private Plant getPlantAtPosition(Vector2D position) {
+        for (Plant plant : plants) {
+            if (plant.getPosition().equals(position)) return plant;
+        }
+        return null;
+    }
+
+    private Vector2D getRandomVector() {
         return new Vector2D(random.nextInt(getWidth()), random.nextInt(getHeight()));
     }
 
     @Override
     public void run() {
-        for (Animal animal : animals) {
+        for (Animal animal: animals) {
             animal.move(MapDirection.values()[random.nextInt(MapDirection.values().length)]);
+        }
+    }
+
+    public void eat() {
+        for (Animal animal : animals) {
+            Plant plant = getPlantAtPosition(animal.getPosition());
+            if (plant != null) {
+                System.out.println("Animal ate plant at position " + animal.getPosition());
+                plants.remove(plant);
+                placePlantOnMap();
+            }
         }
     }
 }
