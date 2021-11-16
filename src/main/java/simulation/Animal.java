@@ -2,9 +2,31 @@ package simulation;
 
 public class Animal {
 	private Vector2D position;
+	private int energy;
+	private int age;
 
-	public Animal(Vector2D position) {
+	public Animal(Vector2D position, int energy) {
 		this.position = position;
+		this.energy = energy;
+		this.age = 1;
+	}
+
+	public Animal setEnergy(int energy) {
+		this.energy = energy;
+		return this;
+	}
+
+	public int getEnergy() {
+		return energy;
+	}
+
+	public Animal aging() {
+		age++;
+		return this;
+	}
+
+	public int getAge() {
+		return age;
 	}
 
 	public Vector2D getPosition() {
