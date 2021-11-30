@@ -1,8 +1,18 @@
 package simulation;
 
 public class Simulation {
-    private static final int WIDTH = 30, HEIGHT = 50;
-    private static final WorldMap worldMap = new WorldMap(WIDTH, HEIGHT);
+    private static final WorldMap worldMap;
+
+    static {
+        worldMap = new WorldMap(
+                SimulationParams.getField("width"),
+                SimulationParams.getField("height"),
+                SimulationParams.getField("noOfAnimals"),
+                SimulationParams.getField("noOfPlants"),
+                SimulationParams.getField("animalEnergy"),
+                SimulationParams.getField("plantEnergy")
+        );
+    }
 
     public static WorldMap getWorldMap() {
         return worldMap;
